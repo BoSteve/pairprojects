@@ -4,7 +4,7 @@
 -- 1. The city name, country name, and city population of all cities in Europe with population greater than 1 million
 -- (36 rows)
 
-select city.name, city.population from city 
+select concat(city.name, ', ', country.name) as city_country, city.population from city 
 join country on country.code = city.countrycode
 where country.continent = 'Europe' and city.population > 1000000;
 
@@ -32,12 +32,17 @@ join country on country.code = city.countrycode where country.continent = 'Europ
 
 -- 7. The number of cities in countries where English is an official language
 -- (number of cities where English is official language: 523)
+select count(*) from city
+join countrylanguage on countrylanguage.countrycode = city.countrycode
+where countrylanguage.language = 'English' and countrylanguage.isofficial = true;
 
 -- 8. The average population of cities in countries where the official language is English
 -- (average population of cities where English is official language: 285,809)
 
 -- 9. The names of all of the continents and the population of the continent’s largest city
 -- (6 rows, largest population for North America: 8,591,309)
+select concat(continent, ' ', Max(city.population)) as largest_city_per_continent from country
+join city on city.countrycode = country.code group by continent order by Max(city.population) desc;
 
 -- 10. The names of all of the cities in South America that have a population of more than 1 million people and the official language of each city’s country
 -- (29 rows)
