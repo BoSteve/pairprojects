@@ -4,16 +4,73 @@
 -- 1. Add Superman's hometown, Smallville, Kansas to the city table. The 
 -- countrycode is 'USA', and population of 45001. (Yes, I looked it up on 
 -- Wikipedia.)
+--CHECK Query
+SELECT *
+FROM city
+WHERE district = 'Kansas';
+
+INSERT INTO city (name, countrycode, district, population) VALUES ('Smallville', 'USA', 'Kansas', 45001);
+
+
 
 -- 2. Add Kryptonese to the countrylanguage table. Kryptonese is spoken by 0.0001
 -- percentage of the 'USA' population.
+--Check query:
+SELECT *
+FROM countrylanguage
+WHERE countrycode = 'USA';
+
+INSERT INTO countrylanguage (countrycode, language, isofficial, percentage) VALUES ('USA', 'Kryptonese', false, 0.0001);
+
+
 
 -- 3. After heated debate, "Kryptonese" was renamed to "Krypto-babble", change 
 -- the appropriate record accordingly.
+--Check query:
+
+SELECT *
+FROM countrylanguage
+WHERE countrycode = 'USA';
+
+UPDATE countrylanguage
+SET language = 'Krypto-babble'
+WHERE countrycode = 'USA'
+AND language = 'Kryptonese';
+
 
 -- 4. Set the US captial to Smallville, Kansas in the country table.
+--Check query:
+SELECT *
+FROM country
+WHERE code = 'USA';
 
--- 5. Delete Smallville, Kansas from the city table. (Did it succeed? Why?)
+
+SELECT *
+FROM city
+WHERE district = 'Kansas';
+
+
+UPDATE country
+SET capital = 4080
+WHERE code = 'USA'
+AND capital = 3813;
+
+
+-- 5. Delete Smallville, Kansas from the city table. (Did it succeed? Why?) 
+
+--It did not succeed because the table city is violating a foriegn key constraint on the table country.
+
+SELECT *
+FROM city
+WHERE district = 'Kansas'
+AND id = 4080;
+
+--DELETE
+
+DELETE
+FROM city
+WHERE district = 'Kansas'
+AND id = 4080;
 
 -- 6. Return the US captial to Washington.
 
